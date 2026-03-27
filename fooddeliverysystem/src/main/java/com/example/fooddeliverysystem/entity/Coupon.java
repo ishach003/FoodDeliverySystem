@@ -1,5 +1,27 @@
 package com.example.fooddeliverysystem.entity;
 
-public class Coupon {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "Coupons")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class Coupon {
+    @Id
+    @Column(name = "coupon_id")
+    private int couponId;
+
+    @Column(name = "coupon_code")
+    private String couponCode;
+
+    @Column(name = "discount")
+    private double discount;
 }
