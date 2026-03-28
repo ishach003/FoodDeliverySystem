@@ -38,11 +38,5 @@ public class Order {
     @JoinColumn(name = "driver_id")
     private DeliveryDriver driver;
 
-    @ManyToMany
-    @JoinTable(
-            name = "OrderCoupons",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "coupon_id")
-    )
-    private List<Coupon> coupons;
+
 }
