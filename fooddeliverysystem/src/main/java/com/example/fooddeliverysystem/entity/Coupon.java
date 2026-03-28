@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "Coupons")
 @Data
@@ -22,6 +24,9 @@ public class Coupon {
     @Column(name = "coupon_code")
     private String couponCode;
 
-    @Column(name = "discount")
-    private double discount;
+    @Column(name = "discount_amount")
+    private double discountAmount;
+
+    @Column(name = "expiry_date")
+    private LocalDate expiry_date;
 }
