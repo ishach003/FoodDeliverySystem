@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "DeliveryAddresses")
+@Table(name = "Ratings")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +19,10 @@ public class Rating {
 
     @Column(name = "rating_value")
     private int ratingValue;
+
+    @Column(name = "review")
+    private String review;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")

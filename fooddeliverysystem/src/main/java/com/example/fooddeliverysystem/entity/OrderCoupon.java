@@ -3,7 +3,7 @@ package com.example.fooddeliverysystem.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "order_coupons")
+@Table(name = " OrdersCoupons")
 
 public class OrderCoupon {
     @EmbeddedId
