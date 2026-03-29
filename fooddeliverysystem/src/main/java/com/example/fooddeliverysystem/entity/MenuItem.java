@@ -33,7 +33,7 @@ public class MenuItem {
     @Column(name = "item_price", nullable = false)
     private BigDecimal itemPrice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 }

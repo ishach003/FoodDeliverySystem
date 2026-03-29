@@ -18,22 +18,10 @@ public class DeliveryAddress {
     @Column(name = "address_id")
     private int addressId;
 
-    @Column(name = "address_line1")
-    private String addressLine1;
+    @Column(name = "address_line")
+    private String addressLine;
 
-    @Column(name = "address_line2")
-    private String addressLine2;
-
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "state")
-    private String state;
-
-    @Column(name = "postal_code")
-    private String postalCode;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 }

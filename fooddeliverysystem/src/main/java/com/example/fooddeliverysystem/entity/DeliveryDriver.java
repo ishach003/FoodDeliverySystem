@@ -25,7 +25,4 @@ public class DeliveryDriver {
 
     @Column(name = "driver_phone")
     private String driverPhone;
-
-    @Column(name = "driver_vehicle")
-    private String driverVehicle;
 }
