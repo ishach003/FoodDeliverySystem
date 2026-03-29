@@ -33,7 +33,7 @@ public class DeliveryAddress {
     @Column(name = "postal_code")
     private String postalCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 }
