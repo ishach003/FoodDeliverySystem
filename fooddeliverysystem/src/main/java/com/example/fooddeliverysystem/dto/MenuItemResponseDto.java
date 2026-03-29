@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuItemResponseDto {
+public class git statusMenuItemResponseDto {
     private int        itemId;
     private String     itemName;
     private String     itemDescription;
