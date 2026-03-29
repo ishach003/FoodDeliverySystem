@@ -5,7 +5,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliveryDriverDTO {
+public class DeliveryDriverDto {
     private int    driverId;
     private String driverName;
     private String driverPhone;
