@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Coupon {
     @Id
     @Column(name = "coupon_id")
