@@ -2,6 +2,7 @@ package com.example.fooddeliverysystem.repository;
 
 
 import com.example.fooddeliverysystem.dto.OrderItemDetailDto;
+
 import com.example.fooddeliverysystem.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,8 +13,9 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
+
     @Query("""
-        SELECT new com.foodservice.entity.dto.OrderItemDetailDTO(
+        SELECT new com.example.fooddeliverysystem.dto.OrderItemDetailDto(
             o.orderDate,
             o.orderStatus,
             io.quantity,
