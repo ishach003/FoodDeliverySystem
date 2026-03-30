@@ -20,7 +20,7 @@ public class RatingController {
 
     private final RatingService ratingService;
 
-    // API #11 — Get rating by ID
+    // Get rating by ID
     @GetMapping("/{ratingId}")
     public ResponseEntity<ResponseDto> getRatingById(@PathVariable Integer ratingId) {
         log.info("GET /api/v1/rating/{}", ratingId);
