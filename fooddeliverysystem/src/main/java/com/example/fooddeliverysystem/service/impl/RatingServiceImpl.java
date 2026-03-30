@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -27,4 +29,16 @@ public class RatingServiceImpl implements RatingService {
                 .map(CustomMapper::toRatingDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Rating", ratingId));
     }
+    @Override
+    public List<RatingDto> getRatingsByRestaurant(Integer restaurantId) {
+        log.info("Fetching ratings for restaurant id: {}", restaurantId);
+        restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new ResourceNotFoundException("Restaurant", restaurantId));
+        return ratingRepository.findByRestaurant_RestaurantId(restaurantId)
+                .stream()
+                .map(CustomMapper::toRatingDto)
+                .toList();
+    }
+
+
 }

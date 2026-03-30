@@ -31,4 +31,14 @@ public class RatingController {
                         ratingService.getRatingById(ratingId)));
 
     }
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<ResponseDto> getRatingsByRestaurant(@PathVariable Integer restaurantId) {
+        log.info("GET /api/v1/rating/restaurant/{}", restaurantId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(RestaurantConstant.STATUS_200,
+                        RestaurantConstant.MESSAGE_210,
+                        ratingService.getRatingsByRestaurant(restaurantId)));
+    }
+
 }
