@@ -3,5 +3,5 @@ package com.example.fooddeliverysystem.service;
 import com.example.fooddeliverysystem.dto.CustomerDto;
 
 public interface CustomerService {
-    CustomerDto getCustomerBy(Integer customerId);
+    CustomerDto getCustomerById(Integer customerId);
 }
