@@ -21,4 +21,5 @@ public class GlobalExceptionHandler {
                         req.getRequestURI()
                 ));
     }
+
 }
