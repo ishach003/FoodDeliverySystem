@@ -1,4 +1,7 @@
 package com.example.fooddeliverysystem.repository;
 
-public interface RatingRepository {
+import com.example.fooddeliverysystem.entity.Rating;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RatingRepository extends JpaRepository<Rating, Integer> {
 }
