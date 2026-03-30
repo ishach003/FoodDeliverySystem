@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/customer")
+@RequestMapping("/api/customer")
 
 public class CustomerController {
 
@@ -23,12 +23,22 @@ public class CustomerController {
 
     @GetMapping("/{customerId}")
     public ResponseEntity<ResponseDto> getCustomerById(@PathVariable Integer customerId) {
-        log.info("GET /api/v1/customer/{}", customerId);
+        log.info("GET /api/customer/{}", customerId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(CustomerConstant.STATUS_200,
                         CustomerConstant.MESSAGE_200,
                         customerService.getCustomerById(customerId)));
+    }
+
+    @GetMapping("/{customerId}/addresses")
+    public ResponseEntity<ResponseDto> getCustomerAddress(@PathVariable Integer customerId){
+        log.info("GET /api/customer/{}/addresses", customerId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(CustomerConstant.STATUS_200,
+                        CustomerConstant.MESSAGE_200,
+                        customerService.getCustomerAddress(customerId)));
     }
 
 }
