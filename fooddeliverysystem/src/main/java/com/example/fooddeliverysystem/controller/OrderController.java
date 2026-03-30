@@ -13,18 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j
 public class OrderController {
 
     private final OrderService orderService;
 
-    @GetMapping("/{customerId}/orders")
+    @GetMapping("customers/{customerId}/orders")
     public ResponseEntity<ResponseDto> getOrdersByCustomerId(
             @PathVariable Integer customerId) {
-
-        System.out.println("Hello print");
 
         log.info("GET /api/customers/{}/orders", customerId);
 
@@ -35,6 +33,16 @@ public class OrderController {
                         OrderConstant.MESSAGE_210,
                         orderService.getOrdersByCustomerId(customerId)
                 ));
+    }
+    @GetMapping("/orders/{orderId}")
+    public ResponseEntity<ResponseDto> getOrderDetailsById(
+            @PathVariable Integer orderId) {
+        log.info("/api/orders/{}", orderId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(OrderConstant.STATUS_200,
+                        OrderConstant.MESSAGE_210,
+                        orderService.getOrderDetailsById(orderId)));
     }
 }
 

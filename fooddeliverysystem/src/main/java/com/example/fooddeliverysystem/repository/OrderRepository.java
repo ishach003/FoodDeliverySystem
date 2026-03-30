@@ -33,4 +33,27 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
         WHERE o.customer.customerId = :customerId
     """)
     List<OrderItemDetailDto> getOrderDetailsByCustomerId(@Param("customerId") Integer customerId);
+
+    @Query("""
+        SELECT new com.example.fooddeliverysystem.dto.OrderItemDetailDto(
+            o.orderDate,
+            o.orderStatus,
+            io.quantity,
+            mi.itemName,
+            mi.itemDescription,
+            mi.itemPrice,
+            r.restaurantName,
+            r.restaurantAddress,
+            r.restaurantPhone
+        )
+        FROM OrderItem io
+        JOIN io.order o
+        JOIN io.menuItem mi
+        JOIN mi.restaurant r
+        WHERE o.orderId = :orderId
+    """)
+    List<OrderItemDetailDto> getOrderDetailsByOrderId(@Param("orderId") Integer orderId);
+
+
+
 }
