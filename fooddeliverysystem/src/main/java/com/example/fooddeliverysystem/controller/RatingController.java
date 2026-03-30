@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/rating")
+@RequestMapping("/api/rating")
 @RequiredArgsConstructor
 public class RatingController {
 
     private final RatingService ratingService;
 
-    // API #11 — Get rating by ID
+    // Get rating by ID
     @GetMapping("/{ratingId}")
     public ResponseEntity<ResponseDto> getRatingById(@PathVariable Integer ratingId) {
-        log.info("GET /api/v1/rating/{}", ratingId);
+        log.info("GET /api/rating/{}", ratingId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(RestaurantConstant.STATUS_200,
@@ -31,4 +31,14 @@ public class RatingController {
                         ratingService.getRatingById(ratingId)));
 
     }
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<ResponseDto> getRatingsByRestaurant(@PathVariable Integer restaurantId) {
+        log.info("GET /api/rating/restaurant/{}", restaurantId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(RestaurantConstant.STATUS_200,
+                        RestaurantConstant.MESSAGE_210,
+                        ratingService.getRatingsByRestaurant(restaurantId)));
+    }
+
 }
