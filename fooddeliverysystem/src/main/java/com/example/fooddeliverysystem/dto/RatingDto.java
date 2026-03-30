@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 public class RatingDto {
     private int    ratingId;
-    private int    ratingValue;
+    private int    rating;
     private String review;
     private int    restaurantId;
     private int    orderId;

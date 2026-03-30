@@ -17,8 +17,8 @@ public class Rating {
     @Column(name = "rating_id")
     private int ratingId;
 
-    @Column(name = "rating_value")
-    private int ratingValue;
+    @Column(name = "rating")
+    private int rating;
 
     @Column(name = "review")
     private String review;
