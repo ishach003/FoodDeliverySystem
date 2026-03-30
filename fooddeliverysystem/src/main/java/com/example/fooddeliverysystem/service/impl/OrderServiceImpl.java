@@ -2,6 +2,7 @@ package com.example.fooddeliverysystem.service.impl;
 
 import com.example.fooddeliverysystem.dto.OrderDto;
 import com.example.fooddeliverysystem.dto.OrderItemDetailDto;
+import com.example.fooddeliverysystem.entity.Order;
 import com.example.fooddeliverysystem.exception.ResourceNotFoundException;
 import com.example.fooddeliverysystem.repository.CustomerRepository;
 import com.example.fooddeliverysystem.repository.OrderRepository;
@@ -38,6 +39,25 @@ public class OrderServiceImpl implements OrderService {
         dto.setOrderDate(details.get(0).getOrderDate());
         dto.setOrderItems(details);
         return List.of(dto);
+    }
+    @Override
+    public OrderDto getOrderDetailsById(Integer orderId) {
+        log.info("Fetching order details for order id: {}", orderId);
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order", orderId));
+
+        List<OrderItemDetailDto> orderDetails =
+                orderRepository.getOrderDetailsByOrderId(orderId);
+
+        OrderDto orderDTO = new OrderDto();
+        orderDTO.setOrderStatus(order.getOrderStatus());
+        orderDTO.setOrderDate(order.getOrderDate());
+        orderDTO.setCustomer(order.getCustomer());
+        orderDTO.setRestaurant(order.getRestaurant());
+        orderDTO.setDeliveryDriver(order.getDeliveryDriver());
+        orderDTO.setOrderItems(orderDetails);
+        return orderDTO;
     }
 
 }
