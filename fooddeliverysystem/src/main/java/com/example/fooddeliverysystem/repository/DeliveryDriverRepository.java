@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface DeliveryDriverRepository extends JpaRepository<DeliveryDriver, Integer> {
-    List<DeliveryDriver> findByDriverVehicle(String vehicle);
+
 }

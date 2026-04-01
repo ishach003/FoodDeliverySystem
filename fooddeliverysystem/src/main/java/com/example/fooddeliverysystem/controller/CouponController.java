@@ -22,7 +22,7 @@ public class CouponController {
 
     @GetMapping("/{couponId}")
     public ResponseEntity<ResponseDto> getCouponById(@PathVariable Integer couponId) {
-        log.info("GET /api/v1/coupon/{}", couponId);
+        log.info("GET /api/coupon/{}", couponId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(CouponConstant.STATUS_200,
@@ -32,7 +32,7 @@ public class CouponController {
 
     @GetMapping("/active")
     public ResponseEntity<ResponseDto> getActiveCoupons() {
-        log.info("GET /api/v1/coupon/active");
+        log.info("GET /api/coupon/active");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(CouponConstant.STATUS_200,
