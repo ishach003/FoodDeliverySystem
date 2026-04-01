@@ -29,4 +29,14 @@ public class CouponController {
                         CouponConstant.MESSAGE_210,
                         couponService.getCouponById(couponId)));
     }
+
+    @GetMapping("/active")
+    public ResponseEntity<ResponseDto> getActiveCoupons() {
+        log.info("GET /api/v1/coupon/active");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDto(CouponConstant.STATUS_200,
+                        CouponConstant.MESSAGE_210,
+                        couponService.getActiveCoupons()));
+    }
 }
