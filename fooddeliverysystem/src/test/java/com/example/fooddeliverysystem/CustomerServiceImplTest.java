@@ -3,6 +3,7 @@ package com.example.fooddeliverysystem;
 import com.example.fooddeliverysystem.dto.CustomerDto;
 import com.example.fooddeliverysystem.entity.Customer;
 import com.example.fooddeliverysystem.entity.DeliveryAddress;
+import com.example.fooddeliverysystem.exception.ResourceNotFoundException;
 import com.example.fooddeliverysystem.repository.CustomerRepository;
 import com.example.fooddeliverysystem.repository.DeliveryAddressRepository;
 import com.example.fooddeliverysystem.service.impl.CustomerServiceImpl;
@@ -17,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -52,7 +54,7 @@ class CustomerServiceImplTest {
     @DisplayName("API-getCustomerById()")
     class GetCustomerById{
         @Test
-        @DisplayName("PositiveTest")
+        @DisplayName("PositiveTestCase")
         void positiveTestGetCustomerById(){
             when(customerRepository.findById(1))
                     .thenReturn(Optional.of(customer));
@@ -66,5 +68,19 @@ class CustomerServiceImplTest {
 
             verify(customerRepository,times(1)).findById(1);
         }
+
+        @Test
+        @DisplayName("NegativeTestCase")
+        void negative_throwsResourceNotFoundWhenCustomerMissing() {
+                    when(customerRepository.findById(99)).thenReturn(Optional.empty());
+
+            assertThatThrownBy(() -> customerService.getCustomerById(99))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("Customer")
+                    .hasMessageContaining("99");
+
+            verify(customerRepository, times(1)).findById(99);
+        }
+
     }
 }
