@@ -60,18 +60,4 @@ class RestaurantServiceImplTest {
             verify(restaurantRepository, times(1)).findById(1);
         }
 
-//        @Test
-//        @DisplayName("NEGATIVE — throws exception when not found")
-//        void negative_throwsExceptionWhenNotFound() {
-//
-//            when(restaurantRepository.findById(99))
-//                    .thenReturn(Optional.empty());
-//
-//            assertThatThrownBy(() ->
-//                    restaurantService.getRestaurantById(99))
-//                    .isInstanceOf(ResourceNotFoundException.class);
-//
-//            verify(restaurantRepository, times(1)).findById(99);
-//        }
-//    }
-}}
+    }}
