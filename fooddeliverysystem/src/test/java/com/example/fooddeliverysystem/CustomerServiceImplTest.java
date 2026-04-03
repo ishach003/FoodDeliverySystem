@@ -1,5 +1,6 @@
 package com.example.fooddeliverysystem;
 
+import com.example.fooddeliverysystem.dto.CustomerAddressDto;
 import com.example.fooddeliverysystem.dto.CustomerDto;
 import com.example.fooddeliverysystem.entity.Customer;
 import com.example.fooddeliverysystem.entity.DeliveryAddress;
@@ -7,6 +8,7 @@ import com.example.fooddeliverysystem.exception.ResourceNotFoundException;
 import com.example.fooddeliverysystem.repository.CustomerRepository;
 import com.example.fooddeliverysystem.repository.DeliveryAddressRepository;
 import com.example.fooddeliverysystem.service.impl.CustomerServiceImpl;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -82,5 +85,28 @@ class CustomerServiceImplTest {
             verify(customerRepository, times(1)).findById(99);
         }
 
+    }
+    @Nested
+    @DisplayName("API-getCustomerAddress()")
+    class GetCustomerAddresses {
+        @Test
+        @DisplayName("PositiveTestCase")
+        void positive_returnsAddressDTOListWhenCustomerExists() {
+            when(customerRepository.findById(1)).thenReturn(Optional.of(customer));
+            when(addressRepository.findByCustomer_CustomerId(1))
+                    .thenReturn(List.of(address));
+
+            List<CustomerAddressDto> result = customerService.getCustomerAddress(1);
+
+            Assertions.assertThat(result).hasSize(1);
+            Assertions.assertThat(result.get(0).getAddressId()).isEqualTo(1);
+            Assertions.assertThat(result.get(0).getAddressLine1()).isEqualTo("123 Elm St");
+            Assertions.assertThat(result.get(0).getCity()).isEqualTo("New York");
+            Assertions.assertThat(result.get(0).getState()).isEqualTo("NY");
+            Assertions.assertThat(result.get(0).getPostalCode()).isEqualTo("10001");
+
+            verify(customerRepository, times(1)).findById(1);
+            verify(addressRepository, times(1)).findByCustomer_CustomerId(1);
+        }
     }
 }
