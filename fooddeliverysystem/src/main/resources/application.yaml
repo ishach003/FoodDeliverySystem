@@ -17,3 +17,25 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd HH:mm:ss
+
+server:
+  port: 8081
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+
+app:
+  jwt:
+    secret: FoodDeliverySecretKeyForJWTTokenGenerationMin32Chars!
+    expiration: 86400000

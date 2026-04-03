@@ -1,8 +1,6 @@
 package com.example.fooddeliverysystem.repository;
 
-
 import com.example.fooddeliverysystem.dto.OrderItemDetailDto;
-
 import com.example.fooddeliverysystem.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,8 +12,10 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
+    // Find all Order entities for a given customer
+    List<Order> findByCustomer_CustomerId(Integer customerId);
     @Query("""
-        SELECT new com.example.fooddeliverysystem.dto.OrderItemDetailDto(
+        SELECT new com.demofood.demo_foodservice.dto.OrderItemDetailDto(
             o.orderDate,
             o.orderStatus,
             io.quantity,
@@ -35,7 +35,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<OrderItemDetailDto> getOrderDetailsByCustomerId(@Param("customerId") Integer customerId);
 
     @Query("""
-        SELECT new com.example.fooddeliverysystem.dto.OrderItemDetailDto(
+        SELECT new com.demofood.demo_foodservice.dto.OrderItemDetailDto(
             o.orderDate,
             o.orderStatus,
             io.quantity,
@@ -55,5 +55,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<OrderItemDetailDto> getOrderDetailsByOrderId(@Param("orderId") Integer orderId);
 
 
-
 }
+
