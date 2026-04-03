@@ -91,4 +91,21 @@ class MenuItemServiceImplTest {
         verify(menuItemRepository, never())
                 .findByRestaurant_RestaurantId(anyInt());
     }
+    // For getMenuItemById()
+    @Test
+    @DisplayName("POSITIVE — returns menu item")
+    void positive_returnsMenuItem() {
+
+        when(menuItemRepository.findById(1))
+                .thenReturn(Optional.of(pizza));
+
+        MenuItemResponseDto result =
+                menuItemService.getMenuItemById(1);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getItemId()).isEqualTo(1);
+
+        verify(menuItemRepository).findById(1);
+    }
+
 }
