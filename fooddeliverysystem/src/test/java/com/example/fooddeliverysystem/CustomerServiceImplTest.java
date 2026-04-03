@@ -74,7 +74,7 @@ class CustomerServiceImplTest {
 
         @Test
         @DisplayName("NegativeTestCase")
-        void negative_throwsResourceNotFoundWhenCustomerMissing() {
+        void negativeTestGetCustomerById() {
                     when(customerRepository.findById(99)).thenReturn(Optional.empty());
 
             assertThatThrownBy(() -> customerService.getCustomerById(99))
@@ -91,7 +91,7 @@ class CustomerServiceImplTest {
     class GetCustomerAddresses {
         @Test
         @DisplayName("PositiveTestCase")
-        void positive_returnsAddressDTOListWhenCustomerExists() {
+        void positiveTestGetCustomerAddress() {
             when(customerRepository.findById(1)).thenReturn(Optional.of(customer));
             when(addressRepository.findByCustomer_CustomerId(1))
                     .thenReturn(List.of(address));
@@ -107,6 +107,20 @@ class CustomerServiceImplTest {
 
             verify(customerRepository, times(1)).findById(1);
             verify(addressRepository, times(1)).findByCustomer_CustomerId(1);
+        }
+        @Test
+        @DisplayName("NegativeTestCase")
+        void negativeTestGetCustomerAddress() {
+
+            when(customerRepository.findById(99)).thenReturn(Optional.empty());
+
+            assertThatThrownBy(() -> customerService.getCustomerAddress(99))
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("Customer")
+                    .hasMessageContaining("99");
+
+
+            verify(addressRepository, never()).findByCustomer_CustomerId(any());
         }
     }
 }
