@@ -107,5 +107,18 @@ class MenuItemServiceImplTest {
 
         verify(menuItemRepository).findById(1);
     }
+    @Test
+    @DisplayName("NEGATIVE — item not found")
+    void negative_itemNotFound() {
 
+        when(menuItemRepository.findById(99))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() ->
+                menuItemService.getMenuItemById(99))
+                .isInstanceOf(ResourceNotFoundException.class);
+
+        verify(menuItemRepository).findById(99);
+    }
 }
+
