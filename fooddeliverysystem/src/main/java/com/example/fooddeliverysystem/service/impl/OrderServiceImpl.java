@@ -1,9 +1,7 @@
 package com.example.fooddeliverysystem.service.impl;
 
 import com.example.fooddeliverysystem.dto.OrderDto;
-import com.example.fooddeliverysystem.dto.OrderItemDetailDto;
 import com.example.fooddeliverysystem.entity.Order;
-import com.example.fooddeliverysystem.exception.ResourceNotFoundException;
 import com.example.fooddeliverysystem.repository.CustomerRepository;
 import com.example.fooddeliverysystem.repository.OrderRepository;
 import com.example.fooddeliverysystem.service.OrderService;
@@ -11,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -24,40 +24,62 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getOrdersByCustomerId(Integer customerId) {
         log.info("Fetching orders for customer id: {}", customerId);
 
-        // Validate customer exists
-        customerRepository.findById(customerId)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer", customerId));
+        // ✅ DO NOT THROW EXCEPTION (important fix)
+        if (!customerRepository.existsById(customerId)) {
+            return List.of();   // return empty → UI handles it
+        }
 
-        List<OrderItemDetailDto> details =
-                orderRepository.getOrderDetailsByCustomerId(customerId);
+        List<Order> orders = orderRepository.findByCustomer_CustomerId(customerId);
 
-        // Group all items into one OrderDTO per call (all have same customer)
-        if (details.isEmpty()) return List.of();
+        if (orders.isEmpty()) return List.of();
 
-        OrderDto dto = new OrderDto();
-        dto.setOrderStatus(details.get(0).getOrderStatus());
-        dto.setOrderDate(details.get(0).getOrderDate());
-        dto.setOrderItems(details);
-        return List.of(dto);
+        List<OrderDto> result = new ArrayList<>();
+
+        for (Order order : orders) {
+
+            OrderDto dto = new OrderDto();
+
+            // ✅ FLAT MAPPING
+            dto.setOrderId(order.getOrderId());
+            dto.setOrderDate(order.getOrderDate());
+            dto.setStatus(order.getOrderStatus());
+
+            if (order.getCustomer() != null) {
+                dto.setCustomerId(order.getCustomer().getCustomerId());
+            }
+
+            if (order.getRestaurant() != null) {
+                dto.setRestaurantId(order.getRestaurant().getRestaurantId());
+            }
+
+            result.add(dto);
+        }
+
+        return result;
     }
+
     @Override
     public OrderDto getOrderDetailsById(Integer orderId) {
         log.info("Fetching order details for order id: {}", orderId);
 
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order", orderId));
+        Order order = orderRepository.findById(orderId).orElse(null);
 
-        List<OrderItemDetailDto> orderDetails =
-                orderRepository.getOrderDetailsByOrderId(orderId);
+        if (order == null) return null;   // frontend handles safely
 
-        OrderDto orderDTO = new OrderDto();
-        orderDTO.setOrderStatus(order.getOrderStatus());
-        orderDTO.setOrderDate(order.getOrderDate());
-        orderDTO.setCustomer(order.getCustomer());
-        orderDTO.setRestaurant(order.getRestaurant());
-        orderDTO.setDeliveryDriver(order.getDeliveryDriver());
-        orderDTO.setOrderItems(orderDetails);
-        return orderDTO;
+        OrderDto dto = new OrderDto();
+
+        dto.setOrderId(order.getOrderId());
+        dto.setOrderDate(order.getOrderDate());
+        dto.setStatus(order.getOrderStatus());
+
+        if (order.getCustomer() != null) {
+            dto.setCustomerId(order.getCustomer().getCustomerId());
+        }
+
+        if (order.getRestaurant() != null) {
+            dto.setRestaurantId(order.getRestaurant().getRestaurantId());
+        }
+
+        return dto;
     }
-
 }

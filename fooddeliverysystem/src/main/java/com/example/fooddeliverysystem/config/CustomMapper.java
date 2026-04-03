@@ -106,4 +106,22 @@ public class CustomMapper {
         dto.setDriverVehicle(entity.getDriverVehicle());
         return dto;
     }
+    //Order
+    public static OrderDto toOrderDto(Order entity) {
+        OrderDto dto = new OrderDto();
+
+        dto.setOrderId(entity.getOrderId());
+        dto.setOrderDate(entity.getOrderDate());
+        dto.setStatus(entity.getOrderStatus());
+
+        if (entity.getCustomer() != null) {
+            dto.setCustomerId(entity.getCustomer().getCustomerId());
+        }
+
+        if (entity.getRestaurant() != null) {
+            dto.setRestaurantId(entity.getRestaurant().getRestaurantId());
+        }
+
+        return dto;
+    }
 }
