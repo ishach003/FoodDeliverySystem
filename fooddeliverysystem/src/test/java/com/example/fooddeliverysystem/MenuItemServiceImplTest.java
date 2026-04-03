@@ -58,7 +58,6 @@ class MenuItemServiceImplTest {
         burger.setItemPrice(new BigDecimal("9.99"));
         burger.setRestaurant(restaurant);
     }
-
     @Test
     @DisplayName("POSITIVE — returns menu items list")
     void positive_returnsMenuItems() {
@@ -78,5 +77,18 @@ class MenuItemServiceImplTest {
         verify(restaurantRepository).findById(1);
         verify(menuItemRepository).findByRestaurant_RestaurantId(1);
     }
+    @Test
+    @DisplayName("NEGATIVE — restaurant not found")
+    void negative_restaurantNotFound() {
 
+        when(restaurantRepository.findById(99))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() ->
+                menuItemService.getMenuItemsByRestaurantId(99))
+                .isInstanceOf(ResourceNotFoundException.class);
+
+        verify(menuItemRepository, never())
+                .findByRestaurant_RestaurantId(anyInt());
+    }
 }
